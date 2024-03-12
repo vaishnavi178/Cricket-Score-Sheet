@@ -1,0 +1,484 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<string.h>
+char t1[10],t2[10];
+int i,j,d,m,w=0,w1=0,b1=0,b2=0,a=1,t=0,p=0;
+int sc1,sc2;
+//int sum=0,count=0;
+struct player 
+{
+    char name1[20];
+    char name2[20];
+    
+} s[11];
+
+void details()
+{
+
+    printf(" Enter Team 1 :\n");
+    gets(t1);
+    printf(" Enter Team 2 :\n");
+    gets(t2);
+    printf(" Enter team1 players:\n");
+    for (i = 0; i < 11; ++i)
+    {
+        printf("%d",i+1);
+        scanf("%s",s[i].name1);
+    }
+    printf(" Enter team2 names:\n");
+    for (i = 0; i < 11; ++i)
+    {
+        printf("%d",i+1);
+        scanf("%s",s[i].name2);
+    }
+    
+}
+void toss()
+{
+    int toss,ts,i=1;
+    printf("\nToss Time!!\n");
+    printf("\t%s Call \n 1. For HEADS\n 2. For Tails\n",t1);
+    scanf("%d",&toss);
+     ts=1 + (rand() % 2);
+     printf("\nResult of toss:");
+     if(ts==1)
+     {
+         printf("\tHeads");
+     }
+     else
+     {
+         printf("\tTails");
+     }
+     
+     if(ts==toss)
+     {
+         printf("\n\t%s won the toss",t1);
+         while(1)
+         {     
+             printf("\nEnter 1.Batting\t2.Bowling\n");
+             scanf("%d",&d);
+             if(d==1)
+             {
+                 printf("\n\t%s chose to Bat\n",t1);
+                 i=0;
+                 break;
+             }
+           //  m=0;
+             else if(d==2)
+             {
+                 printf("\n\t%s chose to Bowl\n",t1);
+                i=1;
+                 break;
+             }
+           //  m=1;
+             else
+             {
+                 printf("\n\tEnter a vaild input\n");
+             }
+         }     
+     }
+     else 
+     {
+         printf("\n\t%s won the toss",t2);
+             
+            while(i=1)
+            {
+                printf("\nEnter 1.Batting\t2.Bowling");
+                scanf("%d",&d);
+               if(d==1)
+               {
+                   printf("\n\t%s chose to Bat \n",t2);
+                   j=0;
+                   break;
+               }
+              // n=0;
+                 else if(d==2)
+                {
+                   printf("\n\t%s chose to Bowl\n",t2);
+                   j=1;
+                   break;
+                }
+               // n=1;
+                 else
+                {
+                  printf("\ninvalid input");
+                  
+                }
+            }
+     }
+}
+
+
+
+void display()
+{
+    printf("\t\t\tCricket tournament\n");
+    printf("\t\t\t   %s    VS    %s \n",t1,t2);
+    printf("\t_____________________________________________________________________________\n");
+    printf("  \t   slno\t\t      Team1 \t\t\t Team2\n");
+    for (i = 0; i < 11; ++i)
+    {
+       printf("\n  \t   %d  ", i + 1);
+       printf("    \t\t%s \t\t\t %s \n",s[i].name1,s[i].name2);
+    }
+    
+    toss();
+    
+    
+    
+   
+}
+//inning1 per over score.
+struct inn1 
+{
+    int data;
+    struct inn1 *next;
+};
+typedef struct inn1 nodee;
+nodee *start1=NULL;
+//nodee *start2;
+nodee* create1()
+{
+    int i;
+    nodee *new1;
+    new1=(nodee*)malloc(sizeof(nodee));
+    new1->next=NULL;
+    return(new1);
+}
+struct inn2 
+{
+    int data1;
+    struct inn2 *next1;
+};
+typedef struct inn2 node1;
+//nodee *start1;
+node1 *start2=NULL;
+node1* create2()
+{
+    int i;
+    node1 *new1;
+    new1=(node1*)malloc(sizeof(node1));
+    new1->next1=NULL;
+    return(new1);
+}
+
+struct sllr
+{
+    int runs;
+    struct sllr *next;
+};
+typedef struct sllr node;
+node *start=NULL;
+node* create()
+{
+    int i;
+    node *new1;
+    new1=(node*)malloc(sizeof(node));
+    new1->next=NULL;
+    return(new1);
+}
+void insert_r()
+{
+    node *new1;
+    int y=0,x=0;
+    int sum=0;//w=0,b1=0,b2=0;
+    int count=0;
+    float rr;
+    for(j=1;j<=10;j++)
+    {
+      printf("   \nOVER %d\n",j);
+        printf("\n\t\tBatsmen:  %s  AND  %s",s[x].name1,s[x+1].name1);
+        printf("\n\t\tBowler:  %s",s[y].name2);
+        y++;
+       for(i=0;i<6;i++)
+       {
+          new1=create();
+          printf("\nEnter:\n>Runs scored\n>7 for wide\n>8 for out\n");
+          scanf("%d",&new1->runs);
+          start=new1;
+          if(new1->runs==7)
+          {
+             printf("   wide");
+             i--;
+             count++;
+             t++;
+             new1->runs=0;
+            free(new1);
+          }
+          else if(new1->runs==8)
+          {
+            
+            printf("   batsman out\n");
+            w++;
+            if(w==10)
+            {
+                printf("all out\n\t INNINGS OVER");
+                
+            }
+            else
+            {
+                printf("%s out!\n next batsman: %s",s[x].name1,s[x+1].name1);
+                x++;
+                new1->runs=0;
+            }
+            
+          }
+          else if(new1->runs<=6)
+          {
+            sum=sum+(new1->runs);
+            if(new1->runs==6)
+              b2++;
+            if(new1->runs==4)
+              b1++;
+          }
+          else
+          {
+           printf("enter valid input\n");
+           i--;
+          }
+          
+          if(sc2!=0)
+              {
+                  if((sum+count)>sc2)
+                  {
+                  printf("%s WINS",t1);
+                  break;
+                  }
+              }
+              insert_in1((new1->runs));
+        }
+         rr=(sum+count)/j;
+        printf("  \n\tCURRENT SCORE %s: %d-%d\t\t run_rate=%.2f\n ",t1,sum+count,w,rr);
+        
+    }
+      sc1=sum+count;
+    printf("______________________________________________________________________\n");
+    printf(" \t\tScore %s : %d-%d ",t1,sc1,w);
+    printf("\t\tBOUNDARIES: %d fours \n\t\t%d sixes\n",b2,b1);
+    
+}
+void insert_in1(int x)
+{
+    nodee *new1;
+    new1=create1();
+    new1->data=x;
+    if(start1==NULL)
+     start1=new1;
+    else
+    {
+     nodee *temp=start1;
+     while(temp->next!=NULL)
+     {
+          temp=temp->next;
+     }
+     
+     temp->next=new1;
+    }
+}
+void insert_in2(int y)
+{
+    node1 *new2;
+    new2=create2();
+    new2->data1=y;
+    if(start2==NULL)
+     start2=new2;
+    else
+    {
+     node1 *temp=start2;
+     while(temp->next1!=NULL)
+     {
+          temp=temp->next1;
+     }
+     
+     temp->next1=new2;
+    }
+}
+void dis_1()
+{
+    node1 *temp1=start2;
+    if(start2==NULL)
+     printf("empty");
+    
+     while(temp1!=NULL)
+     {
+         printf("\t%d  ",temp1->data1);
+         temp1=temp1->next1;
+         a++;
+         if(p>0)
+         {
+             //printf("\t%d  ",temp1->data1);
+             a--;
+             p--;
+            continue;
+         }
+         if(a>6)
+         {
+             printf("\n");
+             a=1;
+         }
+     }
+}
+void dis()
+{
+    nodee *temp=start1;
+    if(start1==NULL)
+     printf("empty");
+     while(temp!=NULL)
+     {
+         printf("\t%d  ",temp->data);
+         temp=temp->next;
+         a++;
+         if(t>0)
+         {
+             //printf("\t%d  ",temp->data);
+             t--;
+             a--;
+             continue;
+         }
+         if(a>6)
+         {
+             printf("\n");
+             a=1;
+         }
+     }
+}
+
+
+void insert_f()
+{
+    node *new1;
+    int z=0,j1,i1,x1=0;
+    int sum1=0;
+    int count1=0;
+    float rr1;
+    for(j1=1;j1<=10;j1++)
+    {
+      printf("   OVER %d\n",j1);
+      printf("\n\t\tBatsmen:  %s  AND  %s",s[x1].name2,s[x1+1].name2);
+        printf("\n\t\tBowler is %s",s[z].name1);
+        z++;
+       for(i1=0;i1<6;i1++)
+       {
+          new1=create();
+          printf("\nEnter:\n>Runs scored\n>7 for wide\n>8 for out\n");
+          scanf("%d",&new1->runs);
+          start=new1;
+          if(new1->runs==7)
+          {
+             printf("   wide");
+             i1--;
+             count1++;
+             p++;
+            new1->runs=1;
+           free(new1);
+          }
+          else if(new1->runs==8)
+          {
+           
+            printf("   batsman out\n");
+            w1++;
+            if(w1==10)
+            {
+                printf("all out\n\t INNINGS OVER");
+                
+            }
+            else
+            {
+                printf("\t\t%s out!\n next batsman: %s",s[x1].name2,s[x1+1].name2);
+                x1++;
+                new1->runs=0;
+            }
+            
+          }
+          else if(new1->runs<=6)
+          {
+            sum1=sum1+(new1->runs);
+            if(new1->runs==6)
+              b2++;
+            if(new1->runs==4)
+              b1++;
+              
+            
+          }
+          else
+          {
+           printf("enter valid input\n");
+           i1--;
+          }
+          
+            if(sc1!=0)
+            {
+              if((sum1+count1)>sc1)
+              {
+              printf("%s WINS",t2);
+              break;
+              }
+            }
+            insert_in2((new1->runs));
+        }
+         rr1=(sum1+count1)/j1;
+        printf("  \n\tCURRENT SCORE %s: %d-%d\t\t run_rate=%.2f\n ",t2,sum1+count1,w1,rr1);
+       
+    }
+      sc2=sum1+count1;
+    printf("_________________________________________________________________________________\n");
+    printf(" \t\tScore%s : %d-%d ",t2,sc2,w1);
+    printf("\n\t\tBOUNDARIES: %d fours \t\t%d sixes\n",b2,b1);
+}
+
+
+void sc_sheet()
+{
+    printf("\n\t\t\tTEAMS ");
+   printf("\t\t\t   %s    VS    %s \n",t1,t2);
+    printf("_______________________________________________________________________________--\n");
+    printf("  \t   slno\t\t      Team1 \t\t\t Team2\n");
+    for (i = 0; i < 11; i++)
+    {
+       printf("\n  \t   %d  ", i + 1);
+       printf("    \t\t%s \t\t\t %s \n",s[i].name1,s[i].name2);
+    } 
+        printf("\nSCORES in all overs by team %s is :\n",t1);
+       dis();
+        printf("\nSCORES in all overs by team %s is :\n",t2);
+       dis_1();
+    
+    
+}
+
+
+void main()
+{
+     details();
+     display();
+     printf("\t\t\tINNING 1 BEGINS\n");
+     printf("\t\t\t 2 over match\n");
+     printf("______________________________________________________________________________\n");
+     if(i==0||j==1)
+     {
+        insert_r();
+        printf("\n\t\tINNINGS 2 BEGINS");
+        insert_f();
+     }
+     else if(i==1||j==0)
+     {
+         insert_f();
+         printf("\n\t\tINNINGS 2 BEGINS");
+         insert_r();
+     }
+     else
+     {
+         printf("MATCH OVER");
+     }
+     
+     sc_sheet();
+    
+     
+     if(sc1>sc2)
+        printf("\n\t\t\t %s WINS BY %d RUNS",t1,(sc1-sc2));
+     
+     if(sc2>sc1)
+        printf("\n\t\t\t %s WINS BY %d RUNS",t2,(sc2-sc1));
+      if(sc1==sc2)
+        printf("MATCH DRAW BETWEEN THE TEAMS %s AND %s",t1,t2);
+}
